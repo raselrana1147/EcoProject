@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}
+ Ecomerce | Checkout
+{% endblock title %}
+{% load static %}
+{% block main %}
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Checkout</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Li's Breadcrumb Area End Here -->
+    <!--Checkout Area Strat-->
+   
+        <div class="container">
+      
+               <div class="alert alert-success">Dear Customer, Your order has been placed successfully. Very soon our suplier team will contact with. Thank you</div><br>
+
+                <h2>Name: {{request.user.first_name}}</h2>
+                <h2>Order Code: {{ordercode}}</h2>
+                <h2>Total payable amount: {{total_amount}}</h2>
+
+                <a href="{% url 'ecommerce:home_page' %}" class="btn btn-warning">Continue Shopping</a>
+
+          
+        </div>
+  
+   
+{% endblock main %}

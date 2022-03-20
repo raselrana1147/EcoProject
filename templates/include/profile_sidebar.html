@@ -1,0 +1,11 @@
+<ul class="list-group">
+	<li class="list-group-item {% if request.resolver_match.url_name == 'user_profile' %} bg-warning {% endif %}"><a href="{% url 'profile:user_profile' %}">User Profile</a></li>
+	<li class="list-group-item {% if request.resolver_match.url_name == 'update_user_profile' %} bg-warning {% endif %}"><a href="{% url 'profile:update_user_profile' %}">Update Profile</a></li>
+	<li class="list-group-item {% if request.resolver_match.url_name == 'change_password' %} bg-warning {% endif %}"><a href="{% url 'profile:change_password' %}">Change Password</a></li>
+	<li class="list-group-item {% if request.resolver_match.url_name == 'order_list' %} bg-warning {% endif %}"><a href="{% url 'order:order_list' %}">My Orders</a></li>
+	<li class="list-group-item"><a href="">My Order Product</a></li>
+	<li class="list-group-item {% if request.resolver_match.url_name == 'user_product_review' %} bg-warning {% endif %}"><a href="{% url 'profile:user_product_review' %}">My Comments</a></li>
+	<li class="list-group-item"><a href="">My Favorits</a></li>
+	<li class="list-group-item"><a href="">My Products</a></li>
+	<li class="list-group-item"><a href="{% url 'profile:user_logout' %}">Logout</a></li>
+ </ul>

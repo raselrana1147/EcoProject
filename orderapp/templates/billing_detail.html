@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}
+ Ecommerce | Order Product List
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block main %}
+   <div id="breadcrum">
+      <div class="container">
+          <div>
+              <ul class="breadcrumb">
+                  <li> <a href="">Home</a></li>
+              
+                  <li class="active">User Profile</li>
+              </ul>
+
+          </div>
+
+      </div>
+
+  </div>
+
+
+
+  <div class="section">
+      <div class="container">
+
+          {%if messages %}
+
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">
+              {{message}}
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          <!--start from here-->
+          <div class="page-section mb-60">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-sm-12 col-md-12 col-xs-12 col-lg-3 mb-30">
+                           <div class="aside">
+                             {% include 'include/profile_sidebar.html' %}
+                        </div>
+                      </div>
+
+                      <div class="card col-sm-12 col-md-12 col-lg-9 col-xs-12">
+                          <h1 class=" font-weight-bold">Billing Details</h1>
+                          <div class=" table-responsive">
+                              <table class="table">
+                                  <thead>
+                                      <tr>
+                                          <th class="li-product-remove">First Name : {{billing.first_name}}</th>
+                                      </tr>
+                                       <tr>
+                                          <th class="li-product-remove">Last Name : {{billing.last_name}}</th>
+                                      </tr>
+                                       <tr>
+                                          <th class="li-product-remove">Phone : {{billing.phone}}</th>
+                                      </tr>
+                                       <tr>
+                                          <th class="li-product-remove">Country : {{billing.country}}</th>
+                                      </tr>
+                                       <tr>
+                                          <th class="li-product-remove">City : {{billing.city}}</th>
+                                      </tr>
+                                       <tr>
+                                          <th class="li-product-remove">Address : {{billing.address}}</th>
+                                      </tr>
+                                       <tr>
+                                          <th class="li-product-remove">Transaction Id : {{billing.transaction_id}}</th>
+                                      </tr>
+                                       <tr>
+                                          <th class="li-product-remove">Note : {{billing.adminnote}}</th>
+                                      </tr>
+                                      
+                                  </thead>
+                                  
+                              </table>
+                              <table class="table">
+                                  <thead>
+                                      <tr>
+                                          <th class="li-product-remove">Image</th>
+                                          <th class="li-product-thumbnail">title</th>
+                                          <th class="cart-product-name">price</th>
+                                          <th class="cart-product-name">Quantity</th>
+                                          <th class="cart-product-name">Unit Total</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for item in products %}
+                                      <tr>
+                                        
+                                          <td class="li-product-thumbnail"><a href="{% url 'ecommerce:product_detail' item.product.slug %}">
+                                            <img src="{{ item.product.image.url }}" style="width:100px;height:60">
+                                          </a></td>
+                                          <td >{{item.product.title}}</td>
+                                          <td >{{item.product.new_price}}</td>
+                                          <td >{{item.quantity}}</td>
+                                           <td >{{item.amount}}</td>
+                                         
+                                      </tr>
+                                 {% endfor %}
+                                     
+                                    
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--end from here-->
+
+              </div>
+          </div>
+{% endblock main %}

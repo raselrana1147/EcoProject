@@ -1,0 +1,123 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% block admin_title %}
+	Admin | Category Add
+{% endblock admin_title %}
+
+{% block content %}
+    <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <h4 class="page-title">Category Add</h4>
+                </div>
+                <div class="col-sm-6">
+                    <div class="float-right d-none d-md-block">
+                        <div class="dropdown">
+                            <a href="javascript:history.back();" class="btn btn-primary dropdown-toggle arrow-none waves-effect waves-light">
+                                 Back <i class="fion ion-md-arrow-forward"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end row -->
+        </div>
+
+        <div class="row">
+            <div class="col-lg-10 offset-1">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title">Add Category</h4>
+                        <form id="form_submit_data" class="needs-validation" data-action="{% url 'adminProduct:admin_categori_add' %}" method="post" enctype="multipart/form-data">
+                        	{% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" name="title" class="form-control" placeholder="Name" required>
+                                    </div>
+                                </div> 
+                            </div>
+                             <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>Child of</label>
+                                        <select class="form-control" name="parent_id">
+                                        	<option value="">Select</option>
+                                        	{% for category in categories %}
+                                        	   <option value="{{ category.id}}">{{category.title}}</option>
+                                        	{% endfor %}
+                                        </select>
+                                 
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>Image</label>
+                                        <input type="file" name="image" class="form-control">
+                                 
+                                    </div>
+                                </div> 
+                            </div>
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- end card -->
+            </div> <!-- end col -->
+        
+           
+        </div>
+		
+{% endblock content %}
+
+{% block admin_js %}
+
+	<script >
+		$(document).ready(function(){
+			$('#form_submit_data').submit(function(e){
+				e.preventDefault()
+				formData=new FormData(this)
+				$.ajax({
+					method:$(this).attr('method'),
+					url:$(this).attr('data-action'),
+					data:formData,
+					cache: false,
+                    contentType: false,
+                    processData: false,
+					success:function(reqponse)
+					{
+						
+						const Toast = Swal.mixin({
+						  toast: true,
+						  position: 'top-end',
+						  showConfirmButton: false,
+						  timer: 3000,
+						  timerProgressBar: true,
+						  didOpen: (toast) => {
+						    toast.addEventListener('mouseenter', Swal.stopTimer)
+						    toast.addEventListener('mouseleave', Swal.resumeTimer)
+						  }
+						})
+
+						Toast.fire({
+						  icon: 'success',
+						  title: reqponse.message
+						})
+						$("#form_submit_data")[0].reset();
+					},
+					error:function(error)
+					{
+
+					}
+
+				})
+			})
+		})
+
+	</script>
+	
+{% endblock admin_js %}
+
+

@@ -1,0 +1,42 @@
+ <div class="left side-menu">
+                <div class="slimscroll-menu" id="remove-scroll">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu" id="side-menu">
+                            <li class="menu-title">Overview</li>
+                            <li>
+                                <a href="{% url 'dashboard:dashboard_index' %}" class="waves-effect">
+                                    <i class="ion ion-md-speedometer"></i><span class="badge badge-success badge-pill float-right">2</span> <span> Dashboard </span>
+                                </a>
+                            </li>
+
+                            <li class="menu-title">Apps</li>
+                            
+                            <li>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="ion ion-md-mail"></i><span> Category <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                                <ul class="submenu">
+                                    <li><a href="{% url 'adminProduct:admin_categori_list' %}">Category List</a></li>
+                                    <li><a href="{% url 'adminProduct:admin_categori_add' %}">Create Category</a></li>
+                                    
+                                </ul>
+                            </li>
+
+                            <li class="menu-title">Layouts</li>
+
+                            <li>
+                                <a href="layout-light-sidebar.html" class="waves-effect">
+                                    <i class="ion ion-md-options"></i><span> Light Sidebar </span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <!-- Sidebar -->
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>

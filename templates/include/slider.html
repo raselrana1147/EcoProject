@@ -1,0 +1,70 @@
+{% load static %}
+{% load ecommercetag %}
+{% all_categories as categories %}
+{% eco_setting as setting %}
+
+            <div class="slider-with-banner">
+                <div class="container">
+                    <div class="row">
+                        <!-- Begin Category Menu Area -->
+                        <div class="col-lg-3">
+                            <!--Category Menu Start-->
+                            <div class="category-menu">
+                                <div class="category-heading">
+                                    <h2 class="categories-toggle"><span>categories</span></h2>
+                                </div>
+                                <div id="cate-toggle" class="category-menu-list">
+                                    <ul>
+                                        {% for category in categories %}        
+                                        <li class="right-menu"><a href="{% url 'ecommerce:category_product' categoty_id=category.id %}">{{category.title}}</a>
+                                        {% if category.children.all %} 
+                                            <ul class="cat-mega-menu">
+                                                  {% for subcat in category.children.all %}   
+                                                    <li class="right-menu cat-mega-title">
+                                                       <a href="{% url 'ecommerce:subcategory_product' subcategoty_id=subcat.id %}">{{subcat.title}}</a>
+                                                    </li>
+                                                  {% endfor %} 
+                                            </ul>
+                                            {% endif %}
+                                        </li>
+                                         {% endfor %}
+                                        <li class="rx-parent">
+                                            <a class="rx-default">More Categories</a>
+                                            <a class="rx-show">Less Categories</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--Category Menu End-->
+                        </div>
+                        <!-- Category Menu Area End Here -->
+                        <!-- Begin Slider Area -->
+                        <div class="col-lg-9">
+                           
+                            <div class="slider-area">
+                                <div class="slider-active owl-carousel">
+                                    <!-- Begin Single Slide Area -->
+                                    {% for slider in sliders %}
+                                    <div class="single-slide align-center-left  animation-style-01 bg-1">
+                                        <div class="slider-progress"></div>
+                                        <img src="{{slider.image.url}}" style="width:100%;height:350px">
+                                        <div class="slider-content">
+                                            
+                                            <h3>{{slider.title}}</h3>
+                                            <div class="default-btn slide-btn">
+                                                <a class="links" href="shop-left-sidebar.html">{{slider.button_title}}
+
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    
+                                </div>
+                            </div>
+                    
+                        </div>
+                        <!-- Slider Area End Here -->
+                    </div>
+                </div>
+            </div>

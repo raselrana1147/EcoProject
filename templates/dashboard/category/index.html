@@ -1,0 +1,153 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+{% block admin_title %}
+	Admin | Category List
+{% endblock admin_title %}
+{% block admin_css %}
+	<link href="{% static 'backend/' %}plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <link href="{% static 'backend/' %}plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+	<link href="{% static 'backend/' %}/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /> 
+{% endblock admin_css %}
+{% block content %}
+    <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <h4 class="page-title">Category Add</h4>
+                </div>
+                <div class="col-sm-6">
+                    <div class="float-right d-none d-md-block">
+                        <div class="dropdown">
+                            <a href="{% url 'adminProduct:admin_categori_add' %}" class="btn btn-primary dropdown-toggle arrow-none waves-effect waves-light">
+                                <i class="mdi mdi-plus"></i> Add New
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end row -->
+        </div>
+		<div class="row">
+		    <div class="col-12">
+		        <div class="card">
+
+		            <div class="card-body">
+		
+		                <h4 class="mt-0 header-title">Category List</h4>
+		                
+	
+		                <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+		                    <thead>
+		                    <tr>
+		                        <th>Serial</th>
+		                        <th>Name</th>
+		                        <th>Image</th>
+		                        <th>Created at</th>
+		                        <th>Action</th>
+		                        
+		                    </tr>
+		                    </thead>
+		                    <tbody>
+
+		                    {% for category in categories %}
+		              
+		                    <tr>
+		                        <td>{{forloop.counter}}</td>
+		                        <td>{{category.title}}</td>
+
+		                        <td>
+		                        	{% if category.image %}
+		                        	    <img src="{{ category.image.url }}" style="width:100px;height:80px">
+		                        	   {% else %}
+		                        	   <span>N/A</span>
+		                        	{% endif %}
+		                        </td>
+		                        <td>{{category.created_at}}</td>
+		                        <td>
+		                        	
+                                <a href="javascript:void(0);" class="mr-3 text-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="mdi mdi-pencil font-18"></i></a>
+
+                                <a href="javascript:void(0);" class="text-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" ><i item_id="{{category.id}}" class="mdi mdi-close font-18 delete_item" data-action="{% url 'adminProduct:admin_category_delete' %}"></i></a>
+                                                   
+		                        </td>
+		                        
+		                    </tr>
+		                  {% endfor %}
+		                    </tbody>
+		                </table>
+		
+		            </div>
+		        </div>
+		    </div> <!-- end col -->
+		</div> <!-- end row -->
+{% endblock content %}
+{% block admin_js %}
+	 
+        <!-- Required datatable js -->
+        <script src="{% static 'backend/' %}plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="{% static 'backend/' %}plugins/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Buttons examples -->
+        <script src="{% static 'backend/' %}plugins/datatables/dataTables.buttons.min.js"></script>
+        <script src="{% static 'backend/' %}plugins/datatables/buttons.bootstrap4.min.js"></script>
+        <script src="{% static 'backend/' %}plugins/datatables/jszip.min.js"></script>
+        <script src="{% static 'backend/' %}plugins/datatables/pdfmake.min.js"></script>
+        <script src="{% static 'backend/' %}plugins/datatables/vfs_fonts.js"></script>
+        <script src="{% static 'backend/' %}plugins/datatables/buttons.html5.min.js"></script>
+        <script src="{% static 'backend/' %}plugins/datatables/buttons.print.min.js"></script>
+        <script src="{% static 'backend/' %}plugins/datatables/buttons.colVis.min.js"></script>
+        <!-- Responsive examples -->
+        <script src="{% static 'backend/' %}plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="{% static 'backend/' %}plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+        <!-- Datatable init js -->
+        <script src="{% static 'backend/' %}assets/pages/datatables.init.js"></script>
+        	<script >
+        
+        		    $(document).ready(function(){
+        		          
+        		          $('body').on('click','.delete_item',function(){
+
+        		            let item_id=$(this).attr('item_id');
+        		           Swal.fire({
+        		              title: "Do you want to delete?",
+        		              icon: "info",
+        		              buttons: true,
+        		              dangerMode: true,
+        		            })
+        		            .then((willDelete) => {
+        		              if (willDelete) {
+        		                   $.ajax({
+        		                      url:"{% url 'adminProduct:admin_category_delete' %}",
+        		                      method:'POST',
+	                  				  cache: false,
+	                                  contentType: false,
+        		                      data:{item_id:item_id},
+        		                      success:function(reqponse){
+	    		                         const Toast = Swal.mixin({
+	    		                           toast: true,
+	    		                           position: 'top-end',
+	    		                           showConfirmButton: false,
+	    		                           timer: 3000,
+	    		                           timerProgressBar: true,
+	    		                           didOpen: (toast) => {
+	    		                             toast.addEventListener('mouseenter', Swal.stopTimer)
+	    		                             toast.addEventListener('mouseleave', Swal.resumeTimer)
+	    		                           }
+	    		                         })
+
+	    		                         Toast.fire({
+	    		                           icon: 'success',
+	    		                           title: reqponse.message
+	    		                         })
+        		                         $('#tables_item').DataTable().ajax.reload();
+        		                      }
+        		                   }); 
+        		              } 
+        		            });
+        		          })
+        		    })
+        	
+        	</script>
+{% endblock admin_js %}
+
+
+
+

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+ Ecommerce | User Reviews
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block main %}
+   <div id="breadcrum">
+      <div class="container">
+          <div>
+              <ul class="breadcrumb">
+                  <li> <a href="">Home</a></li>
+              
+                  <li class="active">User Profile</li>
+              </ul>
+
+          </div>
+
+      </div>
+
+  </div>
+  <div class="section">
+      <div class="container">
+
+          {%if messages %}
+
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">
+              {{message}}
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          <!--start from here-->
+          <div class="page-section mb-60">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-sm-12 col-md-12 col-xs-12 col-lg-3 mb-30">
+                           <div class="aside">
+                             {% include 'include/profile_sidebar.html' %}
+                        </div>
+                      </div>
+
+                      <div class="card col-sm-12 col-md-12 col-lg-9 col-xs-12">
+                          <h1 class="text-center font-weight-bold">User Reviews</h1>
+                          <div class="table-content table-responsive">
+                            
+                               <table class="table">
+                                  <thead>
+                                      <tr>
+                                          <th class="li-product-remove">Image</th>
+                                          <th class="li-product-thumbnail">Product</th>
+                                          <th class="cart-product-name">Subject</th>
+                                          <th class="cart-product-name">Comment</th>
+                                          <th class="cart-product-name">Rating</th>
+                                          <th class="cart-product-name">Status</th>
+                                          <th class="cart-product-name">Commented At</th>
+                                          <th class="cart-product-name">Action</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for review in reviews %}
+                                      <tr>
+                                        
+                                          <td class="li-product-thumbnail"><a href="{% url 'ecommerce:product_detail' review.product.slug %}">
+                                            <img src="{{ review.product.image.url }}" style="width:100px;height:60">
+                                          </a></td>
+                                          <td ><a href="{% url 'ecommerce:product_detail' review.product.slug %}">{{review.product.title}}</a></td>
+                                          <td >{{review.subject}}</td>
+                                          <td >{{review.comment}}</td>
+                                          <td >{{review.rating}}</td>
+                                          <td >{{review.status}}</td>
+                                          <td >{{review.created_at}}</td>
+                                           <td ><a href="{% url 'profile:delete_review' id=review.id %}" class="btn btn-danger btn-sm" onClick='return confirm("Do you want delete this record?")'>Delete</a></td>
+                                         
+                                      </tr>
+                                 {% endfor %}
+                                   
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--end from here-->
+
+              </div>
+          </div>
+{% endblock main %}
